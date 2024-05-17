@@ -1,0 +1,91 @@
+{% extends "material/base.html" %}
+
+{% block content %}
+     <body>
+    <div class="container">
+        <!-- Page Content goes here -->
+        <div class="card-panel teal lighten-2">
+            This is a card panel with a teal lighten-2 class
+            <a href="{{url_for('preview')}}" class="btn btn-small white purple-text waves-effect waves-dark">View Dataset</a>
+
+        </div>
+        <section class="section section-signup">
+            <div class="row">
+                <div class="col s12 m4">
+                    <div class="card-panel grey lighten-4 grey-text text-darken-4 z-depth-0">
+                        <form action="{{ url_for('analyze')}}" method="POST">
+                            <div class="input-field">
+                                <p class="range-field">
+                                <input type="range" id="heightInput" name="height" min="50" max="200" value="0" step="0.1" >
+                                <label for="height">Height</label>                    
+                            </div>
+                            <div class="input-field">
+                                <p class="range-field">
+                                <input type="range" id="weightInput" name="weight" min="20" max="200" value="0" step="0.1"> 
+                                <label for="weight">Weight</label>
+                            </div>
+                            <div class="input-field">
+                                <p class="range-field">
+                                <input type="range" id="ageInput" name="age" min="0" max="100" value="0"step="0.1" >
+                                <label for="">Age</label>
+                            </div>                                 
+                            <div class="input-field">
+                                <select id="role" name="model_choice">
+                                    <option value="" disabled selected>Select ML Algorithm</option>
+                                    <option value="logitmodel">Logistic Regression</option>
+                                    <option value="knnmodel">K-Nearest Neighbour</option>
+                                    <option value="svmmodel">SVM</option>
+                                </select>
+                            </div>                  
+                            <input type="reset" value="Predict" class="btn btn-small waves-effect waves-light">          
+                            <input type="reset" value="Clear" class="btn btn-small waves-effect waves-light">               
+                        </form>
+                    </div>
+                </div>
+                <div class="col s12 m4 offers">
+                    <div class="card-panel purple lighten-4 grey-text text-darken-4 z-depth-0">
+                         
+                          <p>Height: {{ height }}</p>
+                          <p>Weight: {{ weight }}</p>
+                          <p>Age: {{ age}} </p>
+                          Using {{ model_selected }} on {{ clean_data }}
+
+                    </div>
+                </div>
+                                     
+                <div class="col s12 m4 offers">
+                  <div class="collection" role="alert">
+                    <p  class="collection-item active teal">Predicted result {{ result_prediction }} </p>                </div>       				
+                <div class="card-image waves-effect waves-block waves-light">
+                    
+                      {% if result_prediction == ['e'] %}
+                        <img src="static/imgs/man.jpg" width="200px" height="200px">
+    
+                        {% elif result_prediction == ['k']  %}
+                          <img src="static/imgs/women.jpg" width="200px" height="200px">
+                        
+                        {% else %}
+                            <p></p>
+                        
+                       {% endif%}</div></div>
+              
+            </div>
+            
+        </section>
+    </div>
+    </body>
+{% endblock content %}
+
+{% block scripts %}
+      {{super()}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+       <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+      <script>
+          // Or with jQuery     
+        $(document).ready(function(){
+          $('select').formSelect();
+        });
+      </script>
+      
+{% endblock %}
